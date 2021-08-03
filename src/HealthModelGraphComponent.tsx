@@ -28,9 +28,13 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions> {
     this.graphControl = null;
 
     props.data.map((item: HealthModelNode) => {
-      console.log('item: ' + JSON.stringify(item));
+      // console.log('item: ' + JSON.stringify(item));
       const node = {
-        data: { id: item.ComponentName.toLowerCase(), label: item.ComponentName },
+        data: {
+          id: item.ComponentName.toLowerCase(),
+          label: item.ComponentName,
+          score: item.HealthScore,
+        },
       };
       this.graphElements.push(node);
 
@@ -50,29 +54,21 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions> {
   }
 
   render() {
-    // const getFillColor = (score: number) => {
-    //   if (score <= this.props.redThreshold) {
-    //     return theme.palette.redBase;
-    //   }
-    //   if (score <= this.props.yellowThreshold) {
-    //     return theme.palette.yellow;
-    //   }
-
-    //   return theme.palette.greenBase;
-    // };
-    // const elements = [
-    //   { data: { id: 'one', label: 'Node 1' }, position: { x: 0, y: 0 } },
-    //   { data: { id: 'two', label: 'Node 2' }, position: { x: 100, y: 0 } },
-    //   {
-    //     data: { source: 'one', target: 'two', label: 'Edge from Node1 to Node2' },
-    //   },
-    // ];
+    const getFillColor = (score: number) => {
+      if (score <= this.props.redThreshold) {
+        return this.props.theme.palette.redBase;
+      }
+      if (score <= this.props.yellowThreshold) {
+        return this.props.theme.palette.yellow;
+      }
+      return this.props.theme.palette.greenBase;
+    };
 
     let layout = {
       name: 'breadthfirst',
 
       fit: true, // whether to fit the viewport to the graph
-      directed: false, // whether the tree is directed downwards (or edges can point in any direction if false)
+      directed: true, // whether the tree is directed downwards (or edges can point in any direction if false)
       padding: 30, // padding on fit
       circle: false, // put depths in concentric circles if true, put depths top down if false
       grid: false, // whether to create an even grid into which the DAG is placed (circle:false only)
@@ -99,6 +95,32 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions> {
           }
         }}
         layout={layout}
+        stylesheet={[
+          {
+            selector: 'node',
+            style: {
+              width: '50px',
+              height: '50px',
+              'background-color': function(e) {
+                return getFillColor(e.data('score'));
+              },
+              'border-color': '#ccc',
+              'border-width': 2,
+              label: 'data(label)'
+            },
+          },
+          {
+            selector: 'edge',
+            style: {
+              width: 3,
+              'line-color': '#ccc',
+              'target-arrow-color': '#ccc',
+              'target-arrow-shape': 'triangle',
+              'arrow-scale': 1.0,
+              color: '#777'
+            },
+          },
+        ]}
       />
     );
   }
