@@ -20,5 +20,9 @@
   },
   "engines": {
     "node": ">=14"
+  },
+  "dependencies": {
+    "@types/react-cytoscapejs": "^1.2.2",
+    "react-cytoscapejs": "^1.2.1"
   }
 }
