@@ -1,13 +1,9 @@
-FROM ubuntu:latest as builder
-WORKDIR /app/
+FROM node:16 as builder
+WORKDIR /usr/src/app/
 COPY . .
-RUN yarn install
+RUN ["yarn", "build"]
 
-
-FROM grafana:latest
-#RUN yarn build
-#COPY ./dist/* /var/lib/grafana/plugins/healthmodeltree
-
+FROM grafana/grafana:latest
 ENV GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS="nielsb-healthmodeltree"
-WORKDIR /grafana/lib/plugins/healthmodeltree/
-COPY --from=builder /app/* .
+WORKDIR /var/lib/grafana/plugins/healthmodeltree/
+COPY --from=builder /usr/src/app/dist* ./dist
