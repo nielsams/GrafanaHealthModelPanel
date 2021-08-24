@@ -13,6 +13,10 @@ export const HealthModelPanel: React.FC<Props> = ({ options, data, width, height
 
   const view = new DataFrameView(data.series[0]);
 
+  const healthmodelgraph = React.createRef();
+
+  console.log('creating component...');
+  console.log('data: ' + JSON.stringify(view));
   return (
     <div
       className={cx(
@@ -23,7 +27,6 @@ export const HealthModelPanel: React.FC<Props> = ({ options, data, width, height
         `
       )}
     >
-
       <HealthModelGraphComponent
         width={width}
         height={height}

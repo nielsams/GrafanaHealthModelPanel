@@ -20,15 +20,22 @@ interface HealthModelNode {
 export class HealthModelGraphComponent extends React.Component<GraphOptions> {
   graphElements: cytoscape.ElementDefinition[];
   graphControl: any;
+  graphOptions: GraphOptions;
 
   constructor(props: GraphOptions) {
     super(props);
 
     this.graphElements = [];
     this.graphControl = null;
+    this.graphOptions = props;
 
-    props.data.map((item: HealthModelNode) => {
-      // console.log('item: ' + JSON.stringify(item));
+    console.log('constructor...');
+  }
+
+  loadGraphElements() {
+    console.log('loading graph elements...');
+    this.graphOptions.data.map((item: HealthModelNode) => {
+      console.log('item: ' + JSON.stringify(item));
       const node = {
         data: {
           id: item.ComponentName.toLowerCase(),
@@ -40,7 +47,7 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions> {
 
       if (item.Dependencies !== '') {
         item.Dependencies.split(',').forEach(dep => {
-          console.log('item: ' + item.ComponentName + ', dep: ' + dep);
+          //console.log('item: ' + item.ComponentName + ', dep: ' + dep);
           const edge = {
             data: {
               source: item.ComponentName.toLowerCase(),
@@ -54,7 +61,11 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions> {
   }
 
   render() {
+    console.log('rendering...');
     const getFillColor = (score: number) => {
+      if (score == null) {
+        return this.props.theme.palette.gray1;
+      }
       if (score <= this.props.redThreshold) {
         return this.props.theme.palette.redBase;
       }
@@ -63,6 +74,8 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions> {
       }
       return this.props.theme.palette.greenBase;
     };
+
+    this.loadGraphElements();
 
     let layout = {
       name: 'breadthfirst',
@@ -106,7 +119,7 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions> {
               },
               'border-color': '#ccc',
               'border-width': 2,
-              label: 'data(label)'
+              label: 'data(label)',
             },
           },
           {
@@ -117,7 +130,7 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions> {
               'target-arrow-color': '#ccc',
               'target-arrow-shape': 'triangle',
               'arrow-scale': 1.0,
-              color: '#777'
+              color: '#777',
             },
           },
         ]}
