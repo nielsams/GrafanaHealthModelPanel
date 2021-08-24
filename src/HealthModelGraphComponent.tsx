@@ -1,9 +1,10 @@
+import { DataFrameView } from '@grafana/data';
 import { GrafanaTheme } from '@grafana/data/types/theme';
 import React from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 
 interface GraphOptions {
-  data: any;
+  data: DataFrameView;
   yellowThreshold: number;
   redThreshold: number;
   width: number;
@@ -17,25 +18,27 @@ interface HealthModelNode {
   Dependencies: string;
 }
 
-export class HealthModelGraphComponent extends React.Component<GraphOptions> {
+interface GraphState {
   graphElements: cytoscape.ElementDefinition[];
+}
+
+export class HealthModelGraphComponent extends React.Component<GraphOptions, GraphState> {
   graphControl: any;
-  graphOptions: GraphOptions;
 
   constructor(props: GraphOptions) {
     super(props);
 
-    this.graphElements = [];
     this.graphControl = null;
-    this.graphOptions = props;
-
-    console.log('constructor...');
+    this.state = { graphElements: HealthModelGraphComponent.loadGraphFromData(props.data) };
   }
 
-  loadGraphElements() {
-    console.log('loading graph elements...');
-    this.graphOptions.data.map((item: HealthModelNode) => {
-      console.log('item: ' + JSON.stringify(item));
+  static getDerivedStateFromProps(props: GraphOptions, state: GraphState) {
+    return { graphElements: HealthModelGraphComponent.loadGraphFromData(props.data) };
+  }
+
+  static loadGraphFromData(data: DataFrameView): cytoscape.ElementDefinition[] {
+    const result: cytoscape.ElementDefinition[] = [];
+    data.map((item: HealthModelNode) => {
       const node = {
         data: {
           id: item.ComponentName.toLowerCase(),
@@ -43,25 +46,25 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions> {
           score: item.HealthScore,
         },
       };
-      this.graphElements.push(node);
+      result.push(node);
 
       if (item.Dependencies !== '') {
         item.Dependencies.split(',').forEach(dep => {
-          //console.log('item: ' + item.ComponentName + ', dep: ' + dep);
           const edge = {
             data: {
               source: item.ComponentName.toLowerCase(),
               target: dep.toLowerCase(),
             },
           };
-          this.graphElements.push(edge);
+          result.push(edge);
         });
       }
     });
+
+    return result;
   }
 
   render() {
-    console.log('rendering...');
     const getFillColor = (score: number) => {
       if (score == null) {
         return this.props.theme.palette.gray1;
@@ -74,8 +77,6 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions> {
       }
       return this.props.theme.palette.greenBase;
     };
-
-    this.loadGraphElements();
 
     let layout = {
       name: 'breadthfirst',
@@ -100,7 +101,7 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions> {
 
     return (
       <CytoscapeComponent
-        elements={CytoscapeComponent.normalizeElements(this.graphElements)}
+        elements={CytoscapeComponent.normalizeElements(this.state.graphElements)}
         style={{ width: this.props.width, height: this.props.height }}
         cy={cy => {
           if (this.graphControl !== cy) {

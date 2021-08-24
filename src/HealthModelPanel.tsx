@@ -10,13 +10,8 @@ interface Props extends PanelProps<HealthModelPanelOptions> {}
 export const HealthModelPanel: React.FC<Props> = ({ options, data, width, height }) => {
   const theme = useTheme();
   const styles = getStyles();
-
   const view = new DataFrameView(data.series[0]);
 
-  const healthmodelgraph = React.createRef();
-
-  console.log('creating component...');
-  console.log('data: ' + JSON.stringify(view));
   return (
     <div
       className={cx(
