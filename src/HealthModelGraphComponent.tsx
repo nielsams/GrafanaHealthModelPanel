@@ -103,6 +103,7 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions, Gra
       <CytoscapeComponent
         elements={CytoscapeComponent.normalizeElements(this.state.graphElements)}
         style={{ width: this.props.width, height: this.props.height }}
+        userZoomingEnabled={false}
         cy={cy => {
           if (this.graphControl !== cy) {
             this.graphControl = cy;
