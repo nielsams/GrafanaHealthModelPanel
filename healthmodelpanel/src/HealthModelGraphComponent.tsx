@@ -29,14 +29,22 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions, Gra
     super(props);
 
     this.graphControl = null;
+
+    // The component state is set initially using the GraphOptions properties.
+    // Grafana will update the properties value through the parent component if new data comes in and re-render components
+    // However, that will not trigger a state update since the constructor will not run on a re-render.
+    // To solve that, React has getDerivedStateFromProps, which will trigger when GraphOptions updates.
     this.state = { graphElements: HealthModelGraphComponent.loadGraphFromData(props.data) };
   }
 
   static getDerivedStateFromProps(props: GraphOptions, state: GraphState) {
+    // This is called when the GraphOptions instance changes and returns the modified component state.
     return { graphElements: HealthModelGraphComponent.loadGraphFromData(props.data) };
   }
 
   static loadGraphFromData(data: DataFrameView): cytoscape.ElementDefinition[] {
+    // Turns a Grafana DataFrameView into a cytoscape ElementDefinition[] that can be used to visualize the graph.
+    // Nodes are populated for each 'ComponentName', edges are added for each dependency a component has listed.
     const result: cytoscape.ElementDefinition[] = [];
     data.map((item: HealthModelNode) => {
       const node = {
@@ -49,7 +57,7 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions, Gra
       result.push(node);
 
       if (item.Dependencies !== '') {
-        item.Dependencies.split(',').forEach(dep => {
+        item.Dependencies.split(',').forEach((dep) => {
           const edge = {
             data: {
               source: item.ComponentName.toLowerCase(),
@@ -79,6 +87,7 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions, Gra
     };
 
     let layout = {
+      // These are the default layout options for cytoscape breadthfirst.
       name: 'breadthfirst',
 
       fit: true, // whether to fit the viewport to the graph
@@ -104,7 +113,7 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions, Gra
         elements={CytoscapeComponent.normalizeElements(this.state.graphElements)}
         style={{ width: this.props.width, height: this.props.height }}
         userZoomingEnabled={false}
-        cy={cy => {
+        cy={(cy) => {
           if (this.graphControl !== cy) {
             this.graphControl = cy;
           }
@@ -116,7 +125,7 @@ export class HealthModelGraphComponent extends React.Component<GraphOptions, Gra
             style: {
               width: '50px',
               height: '50px',
-              'background-color': function(e) {
+              'background-color': function (e) {
                 return getFillColor(e.data('score'));
               },
               'border-color': '#ccc',

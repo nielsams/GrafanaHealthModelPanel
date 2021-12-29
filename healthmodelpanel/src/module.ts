@@ -2,7 +2,7 @@ import { PanelPlugin } from '@grafana/data';
 import { HealthModelPanelOptions } from './types';
 import { HealthModelPanel } from './HealthModelPanel';
 
-export const plugin = new PanelPlugin<HealthModelPanelOptions>(HealthModelPanel).setPanelOptions(builder => {
+export const plugin = new PanelPlugin<HealthModelPanelOptions>(HealthModelPanel).setPanelOptions((builder) => {
   return builder
     .addTextInput({
       path: 'yellowThreshold',

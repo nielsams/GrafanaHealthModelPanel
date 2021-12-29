@@ -1,9 +1,9 @@
 import React from 'react';
 import { PanelProps, DataFrameView } from '@grafana/data';
 import { HealthModelPanelOptions } from 'types';
-import { css, cx } from 'emotion';
 import { stylesFactory, useTheme } from '@grafana/ui';
 import { HealthModelGraphComponent } from './HealthModelGraphComponent';
+import { css, cx } from '@emotion/css';
 
 interface Props extends PanelProps<HealthModelPanelOptions> {}
 

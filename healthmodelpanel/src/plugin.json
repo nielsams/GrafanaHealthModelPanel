@@ -1,29 +1,20 @@
 {
   "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
   "type": "panel",
-  "name": "healthmodeltree",
-  "id": "nielsb-healthmodeltree",
+  "name": "healthmodelpanel",
+  "id": "healthmodelpanel",
   "info": {
     "description": "",
     "author": {
       "name": "nielsb",
-      "url": ""
+      "url": "https://github.com/nielsams/grafanahealthmodelpanel"
     },
     "keywords": [],
     "logos": {
       "small": "img/logo.svg",
       "large": "img/logo.svg"
     },
-    "links": [
-      {
-        "name": "Website",
-        "url": "https://github.com/grafana/grafana-starter-panel"
-      },
-      {
-        "name": "License",
-        "url": "https://github.com/grafana/grafana-starter-panel/blob/master/LICENSE"
-      }
-    ],
+    "links": [],
     "screenshots": [],
     "version": "%VERSION%",
     "updated": "%TODAY%"
