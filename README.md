@@ -1,5 +1,5 @@
 # Grafana
-This directory contains all the files needed for the automated provisioning of the Grafana monitoring solution. A screenshot of the full dashboard is shown at the bottom of this page. 
+This directory contains all the files needed for the automated provisioning of the Grafana monitoring solution.
 
 ## Contents
 When the Dockerfile is built, a container is created with the following:
