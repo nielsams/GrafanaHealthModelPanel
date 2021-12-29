@@ -21,6 +21,8 @@ The container expects the following environment variables to be set:
 The data source has been set for Managed Identity authentication to Azure.
 This means that the infrastructure running the container, e.g. Azure App Service, should have its system-managed identity enabled and that identity should be assigned, at minimum, the 'Log Analytics Reader' permission on a scope that includes all required Log Analytics instances.
 
+If you do not want to use the managed identity for connecting to Log Analytics, you can edit or remove config/provisioning/datasources/azure-monitor.yaml.
+
 ## Grafana Authentication
 Currently, authentication has been set to a username/password. Obviously this is not the best way in production scenarios, but OAuth authentication requires external dependencies that make this reference implementation harder to deploy and may be subject to security constraints in your local environment. 
 
