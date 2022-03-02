@@ -35,10 +35,10 @@ jobs:
       - run: cp package.json dist
         working-directory: ${{env.workdir}}
 
-      - run: npm version ${{env.package_version}}
-        working-directory: ${{env.workdir}}/dist
-
-      - run: npm publish
+      - run: |
+          npm version ${{env.package_version}}
+          npm config set registry https://npm.pkg.github.com/
+          npm publish
         working-directory: ${{env.workdir}}/dist
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
