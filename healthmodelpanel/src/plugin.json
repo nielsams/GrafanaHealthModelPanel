@@ -1,13 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
   "type": "panel",
-  "name": "healthmodelpanel",
-  "id": "healthmodelpanel",
+  "name": "healthmodeltree",
+  "id": "alwayson-healthmodelpanel",
   "info": {
     "description": "",
     "author": {
       "name": "nielsb",
-      "url": "https://github.com/nielsams/grafanahealthmodelpanel"
+      "url": "https://github.com/Azure/AlwaysOn"
     },
     "keywords": [],
     "logos": {
