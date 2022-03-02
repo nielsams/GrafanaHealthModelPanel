@@ -39,9 +39,10 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
-      - run: | 
-        cp package.json dist
-        sed -i -e "s/\"version\": \".*\"/\"version\": \"${{env.package_version}}\"/" package.json
+      - run: cp package.json dist
+        working-directory: ${{env.workdir}}
+      - run: npm version ${{env.package_version}}
+        working-directory: ${{env.workdir}}/dist
       - run: npm publish dist
         working-directory: ${{env.workdir}}
         env:
