@@ -29,15 +29,14 @@ jobs:
       - run: yarn build
         working-directory: ${{env.workdir}}
   
-      - run: ls -alR
-        working-directory: ${{env.workdir}}
-
       - run: cp package.json dist
         working-directory: ${{env.workdir}}
 
-      - run: |
-          npm version ${{env.package_version}}
-          npm publish
+      - run: npm version ${{env.package_version}}
         working-directory: ${{env.workdir}}/dist
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - id: publish
+        uses: JS-DevTools/npm-publish@v1
+        working-directory: ${{env.workdir}}/dist
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
