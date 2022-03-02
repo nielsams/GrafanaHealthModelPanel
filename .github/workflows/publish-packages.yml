@@ -10,7 +10,6 @@ on:
   
 jobs:
   build-publish:
-    needs: build
     runs-on: ubuntu-latest
     env:
       workdir: healthmodelpanel
