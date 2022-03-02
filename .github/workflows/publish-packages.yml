@@ -9,22 +9,7 @@ on:
   workflow_dispatch:
   
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    env:
-      workdir: ./healthmodelpanel
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16
-        
-      - run: yarn install
-        working-directory: ${{env.workdir}}
-      - run: yarn build
-        working-directory: ${{env.workdir}}
-
-  publish-gpr:
+  build-publish:
     needs: build
     runs-on: ubuntu-latest
     env:
@@ -39,6 +24,11 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
+      - run: yarn install
+        working-directory: ${{env.workdir}}
+      - run: yarn build
+        working-directory: ${{env.workdir}}
+  
       - run: cp package.json dist
         working-directory: ${{env.workdir}}
       - run: npm version ${{env.package_version}}
