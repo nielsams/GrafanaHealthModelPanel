@@ -23,15 +23,22 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
+
       - run: yarn install
         working-directory: ${{env.workdir}}
+
       - run: yarn build
         working-directory: ${{env.workdir}}
   
+      - run: ls -alR
+        working-directory: ${{env.workdir}}
+
       - run: cp package.json dist
         working-directory: ${{env.workdir}}
+
       - run: npm version ${{env.package_version}}
         working-directory: ${{env.workdir}}/dist
+
       - run: npm publish dist
         working-directory: ${{env.workdir}}
         env:
