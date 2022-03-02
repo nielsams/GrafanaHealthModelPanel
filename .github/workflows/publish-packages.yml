@@ -28,7 +28,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     env:
-      workdir: ./healthmodelpanel
+      workdir: healthmodelpanel
       package_version: ${{github.event.release.tag_name}}
     permissions:
       contents: read
