@@ -7,8 +7,8 @@ COPY . .
 
 # Build the healthmodel panel project
 WORKDIR /usr/src/app/healthmodelpanel
-RUN npm install
-RUN npm run build
+RUN yarn install
+RUN yarn run build
 
 WORKDIR /usr/src/app/config
 
