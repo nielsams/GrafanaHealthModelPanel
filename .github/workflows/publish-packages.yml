@@ -22,7 +22,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          registry-url: https://npm.pkg.github.com/
 
       - run: yarn install
         working-directory: ${{env.workdir}}
@@ -39,7 +38,7 @@ jobs:
       - run: npm version ${{env.package_version}}
         working-directory: ${{env.workdir}}/dist
 
-      - run: npm publish dist
-        working-directory: ${{env.workdir}}
+      - run: npm publish
+        working-directory: ${{env.workdir}}/dist
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
