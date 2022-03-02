@@ -18,9 +18,9 @@ jobs:
         with:
           node-version: 16
         
-      - run: npm install
+      - run: yarn install
         working-directory: ${{env.workdir}}
-      - run: npm run build
+      - run: yarn build
         working-directory: ${{env.workdir}}
 
   publish-gpr:
