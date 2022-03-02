@@ -39,9 +39,8 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
-      - run: |
-          cp package.json dist
-          npm publish dist
+      - run: cp package.json dist
+      - run: npm publish dist
         working-directory: ${{env.workdir}}
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}

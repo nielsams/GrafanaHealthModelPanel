@@ -1,6 +1,9 @@
 {
-  "name": "grafana-healthmodelpanel",
-  "repository": "https://github.com/nielsams/grafanahealthmodelpanel",
+  "name": "@nielsams/grafana-healthmodelpanel",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nielsams/grafanahealthmodelpanel.git"
+  },
   "version": "1.0.0",
   "description": "Grafana Health Model panel",
   "scripts": {
@@ -34,8 +37,5 @@
     "immer": "^9.0.6",
     "axios": "^0.21.4",
     "yargs-parser": "^13.1.2"
-  },
-  "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
   }
 }
