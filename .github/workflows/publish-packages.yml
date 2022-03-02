@@ -10,10 +10,13 @@ on:
   
 jobs:
   build-publish:
-    runs-on: ubuntu-latest
     env:
       workdir: healthmodelpanel
       package_version: ${{github.event.release.tag_name}}
+    defaults: 
+      run: 
+        working-directory: ${{env.workdir}}
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
@@ -22,20 +25,17 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
+          registry-url: https://npm.pkg.github.com/
 
       - run: yarn install
-        working-directory: ${{env.workdir}}
 
       - run: yarn build
-        working-directory: ${{env.workdir}}
   
       - run: cp package.json dist
-        working-directory: ${{env.workdir}}
 
-      - run: npm version ${{env.package_version}}
+      - run: |
+          npm version ${{env.package_version}}
+          npm publish
         working-directory: ${{env.workdir}}/dist
-
-      - id: publish
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{secrets.GITHUB_TOKEN}}
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
