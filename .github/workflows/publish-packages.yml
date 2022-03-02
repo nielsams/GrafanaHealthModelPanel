@@ -18,9 +18,9 @@ jobs:
         with:
           node-version: 16
         
-      - run: yarn install
+      - run: npm install
         working-directory: ${{env.workdir}}
-      - run: yarn build
+      - run: npm run build
         working-directory: ${{env.workdir}}
 
   publish-gpr:
@@ -37,7 +37,7 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
-      - run: yarn publish
+      - run: npm publish
         working-directory: ${{env.workdir}}
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}

@@ -1,6 +1,6 @@
 {
   "name": "grafana-healthmodelpanel",
-  "repository": "https://github.com/nielsams/GrafanaHealthModelPanel",
+  "repository": "https://github.com/nielsams/grafanahealthmodelpanel",
   "version": "1.0.0",
   "description": "Grafana Health Model panel",
   "scripts": {
