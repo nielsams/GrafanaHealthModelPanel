@@ -10,17 +10,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      workdir: ./healthmodelpanel
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 16
+        
       - run: yarn install
+        working-directory: ${{env.workdir}}
       - run: yarn build
+        working-directory: ${{env.workdir}}
 
   publish-gpr:
     needs: build
     runs-on: ubuntu-latest
+    env:
+      workdir: ./healthmodelpanel
     permissions:
       contents: read
       packages: write
@@ -30,7 +37,7 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
+      - run: yarn publish
+        working-directory: ${{env.workdir}}
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
