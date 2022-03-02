@@ -37,7 +37,7 @@ jobs:
 
       - run: |
           npm version ${{env.package_version}}
-          npm publish --@nielsams:registry=https://npm.pkg.github.com/
+          npm publish
         working-directory: ${{env.workdir}}/dist
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
