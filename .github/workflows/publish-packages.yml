@@ -35,7 +35,7 @@ jobs:
 
       - run: |
           npm version ${{env.package_version}}
-          npm publish
+          npm publish --access public
         working-directory: ${{env.workdir}}/dist
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
