@@ -4,9 +4,6 @@
     "type": "git",
     "url": "https://github.com/nielsams/grafanahealthmodelpanel.git"
   },
-  "publishConfig": {
-    "registry":"https://npm.pkg.github.com/"
-  },
   "version": "1.0.0",
   "description": "Grafana Health Model panel",
   "scripts": {
