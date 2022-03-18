@@ -31,7 +31,7 @@ jobs:
 
       - run: yarn build
   
-      - run: cp package.json dist
+      - run: cp package.dist.json dist
 
       - run: |
           npm version ${{env.package_version}}
