@@ -1,5 +1,16 @@
-# Grafana
-This repo contains a custom Grafana panel used for visualizing a health model based on KQL queries.
+# Grafana Health Model Panel
+
+This repo contains a custom Grafana panel used for visualizing a health model based on KQL queries. 
+
+![Example healthmodelpanel](./media/healthmodel-examples.png)
+
+The health model panel was developed in support of the [Azure Mission Critical project](https://github.com/azure/mission-critical). Azure Mission-Critical is an open source project that provides a prescriptive architectural approach to building highly-reliable cloud-native applications on Microsoft Azure for mission-critical workloads. For more context on the application of this Grafana plugin, please refer to the Mission Critical project. 
+
+The health model has been implemented in Azure Log Analytics using KQL queries. This is a custom Grafana visualization panel, which can be used to visualize that health model. It's main purpose is to visualize, in an intuitive way:
+
+- The health state of each component
+- The hierarchical dependencies between components.
+
 
 ## Contents
 When the Dockerfile is built, a container is created with the following:
@@ -27,16 +38,6 @@ If you do not want to use the managed identity for connecting to Log Analytics, 
 Currently, authentication has been set to a username/password. Obviously this is not the best way in production scenarios, but OAuth authentication requires external dependencies that make this reference implementation harder to deploy and may be subject to security constraints in your local environment. 
 
 Before deploying this to your production environment, it is *highly recommended* to enable OAuth. This is done by editing the grafana.ini file and uncommenting/filling the values under the authentication section. Naturally, don't add secrets there. You can add ${MY_SECRET_VALUE} as a value and include that at runtime through environment variables. 
-
-
-# Grafana Health Model Panel
-
-The health model has been implemented in Azure Log Analytics using KQL queries. This is a custom Grafana visualization panel, which can be used to visualize that health model. It's main purpose is to visualize, in an intuitive way:
-
-- The health state of each component
-- The hierarchical dependencies between components.
-
-This document describes the specifics of the custom Grafana visualization and the dependencies it has on the underlying solution. For a broader context, view the (TODO) reference implementation health model or the (TODO) top-level guidance on health modeling.
 
 ## Usage
 

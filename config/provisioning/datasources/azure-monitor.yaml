@@ -13,6 +13,6 @@ datasources:
       azureAuthType: msi
       subscriptionId: ${AZURE_DEFAULT_SUBSCRIPTION}
     version: 1
-    editable: false
+    editable: true
     ordId: 1
     isDefault: true
